@@ -1,0 +1,1684 @@
+Here’s the full updated HTML with the **TCS brand tags removed from slides 2 and 3** and the **Slide 2 image fitted fully without cropping**.
+
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InnovAIte'26 — ClaimCompanion</title>
+
+<style>
+  :root{
+    --tcs-blue:#0057b8;
+    --dark-left:#2b3448;
+    --dark-right:#0d1420;
+    --cyan:#4db8e8;
+    --orange:#f0a500;
+    --green:#1b7f5b;
+    --text-dark:#1c2333;
+    --muted:#5a6474;
+    --border:#cdd4e0
+  }
+
+  *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box
+  }
+
+  html,body{
+    height:100%;
+    background:#000;
+    overflow:hidden;
+    font-family:'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif
+  }
+
+  .stage{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%)
+  }
+
+  .slide{
+    position:absolute;
+    inset:0;
+    display:none;
+    overflow:hidden;
+    background:linear-gradient(
+      115deg,
+      #fff 0%,
+      #f4f7fb 45%,
+      #e6edf5 100%
+    )
+  }
+
+  .slide.active{
+    display:block
+  }
+
+  .slide.dark{
+    background:linear-gradient(
+      115deg,
+      var(--dark-left) 0%,
+      var(--dark-right) 75%
+    )
+  }
+
+  .slide.dark::after{
+    content:'';
+    position:absolute;
+    width:1300px;
+    height:1300px;
+    left:50%;
+    bottom:-950px;
+    transform:translateX(-50%);
+    border-radius:50%;
+    background:radial-gradient(
+      closest-side,
+      rgba(205,215,235,.30),
+      rgba(205,215,235,0) 72%
+    );
+    pointer-events:none
+  }
+
+  /* =========================
+     COMMON ELEMENTS
+  ========================= */
+
+  .ribbon{
+    position:absolute;
+    top:38px;
+    left:0;
+    right:0;
+    height:58px;
+    display:flex;
+    align-items:center;
+    color:#fff;
+    font-size:26px;
+    font-weight:700;
+    padding-left:36px;
+    background:linear-gradient(
+      90deg,
+      var(--tcs-blue) 0%,
+      var(--tcs-blue) 72%,
+      rgba(0,87,184,0) 100%
+    );
+    clip-path:polygon(
+      0 0,
+      100% 0,
+      78% 100%,
+      0 100%
+    )
+  }
+
+  .next-tab{
+    position:absolute;
+    bottom:6px;
+    left:56px;
+    padding:9px 22px;
+    color:#fff;
+    font-size:18px;
+    font-weight:700;
+    letter-spacing:.3px;
+    border-radius:8px 8px 0 0;
+    background:linear-gradient(
+      180deg,
+      #59a9e8,
+      #3e8fd2
+    )
+  }
+
+  .brandline{
+    display:flex;
+    flex-direction:column;
+    gap:2px
+  }
+
+  .brandline b{
+    font-size:22px;
+    letter-spacing:2px;
+    color:var(--text-dark)
+  }
+
+  .brandline span{
+    font-size:10px;
+    letter-spacing:3.5px;
+    color:var(--muted)
+  }
+
+  .brandtr{
+    position:absolute;
+    top:26px;
+    right:42px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:4px
+  }
+
+  .brain-wrap{
+    position:relative;
+    width:230px;
+    height:230px;
+    filter:drop-shadow(
+      0 10px 22px rgba(0,0,0,.45)
+    )
+  }
+
+  .brain-wrap svg{
+    width:100%;
+    height:100%
+  }
+
+  .deposit{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center
+  }
+
+  .brain-chip{
+    width:58px;
+    height:44px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:20px;
+    color:var(--text-dark);
+    background:linear-gradient(
+      180deg,
+      #f9d877,
+      var(--orange)
+    );
+    box-shadow:0 4px 10px rgba(0,0,0,.35)
+  }
+
+  .event-word{
+    font-weight:800;
+    font-size:42px;
+    letter-spacing:1px;
+    color:#fff;
+    line-height:1
+  }
+
+  .event-word .AI{
+    color:var(--orange)
+  }
+
+  .event-sub{
+    margin-top:12px;
+    font-weight:700;
+    letter-spacing:2.5px;
+    font-size:15px
+  }
+
+  .event-sub .w1{
+    color:var(--orange)
+  }
+
+  .event-sub .w2{
+    color:var(--cyan)
+  }
+
+  .event-sub .w3{
+    color:var(--green)
+  }
+
+  .event-sub .rule{
+    color:#e8d9a0;
+    font-weight:400
+  }
+
+  .event-sub .rule.g{
+    color:#35c48f
+  }
+
+  .page-tag{
+    position:absolute;
+    bottom:26px;
+    left:50%;
+    transform:translateX(-50%);
+    color:#8fa3c4;
+    font-size:16px;
+    letter-spacing:2px
+  }
+
+  .nav{
+    position:fixed;
+    bottom:18px;
+    right:22px;
+    display:flex;
+    gap:10px;
+    z-index:50
+  }
+
+  .nav button{
+    border:none;
+    cursor:pointer;
+    padding:10px 18px;
+    font-size:22px;
+    color:#fff;
+    background:rgba(60,75,100,.85);
+    border-radius:8px
+  }
+
+  .nav button:hover{
+    background:rgba(90,110,140,.9)
+  }
+
+  .counter{
+    position:fixed;
+    bottom:24px;
+    left:24px;
+    color:#9fb3d1;
+    font-size:15px;
+    z-index:50
+  }
+
+  /* =========================
+     SLIDE 1
+  ========================= */
+
+  .s1{
+    color:#eef2f8;
+    padding:110px 0 0 70px
+  }
+
+  .s1 .row{
+    display:flex;
+    gap:14px;
+    font-size:27px;
+    margin-bottom:34px
+  }
+
+  .s1 .row .lbl{
+    font-weight:400;
+    color:#dfe6f2
+  }
+
+  .s1 .row .val{
+    font-weight:700;
+    color:#fff
+  }
+
+  .s1 .members-lbl{
+    margin-top:120px;
+    font-size:23px;
+    font-weight:700;
+    color:#f2f5fa
+  }
+
+  .s1 ul{
+    list-style:none;
+    margin-top:22px
+  }
+
+  .s1 li{
+    font-size:23px;
+    font-weight:600;
+    color:#d7deea;
+    line-height:1.9
+  }
+
+  /* =========================
+     CONTENT / CARDS
+  ========================= */
+
+  .content{
+    padding:130px 42px 70px
+  }
+
+  .white-card{
+    background:rgba(255,255,255,.75);
+    border:1.6px solid var(--border);
+    border-radius:14px;
+    padding:22px
+  }
+
+  /* =========================
+     SLIDE 2
+  ========================= */
+
+  .problem-grid{
+    display:grid;
+    grid-template-columns:1.25fr .85fr;
+    gap:34px;
+    height:100%
+  }
+
+  /*
+    Image card updated:
+    - Uses flexbox to center the image
+    - Image uses object-fit: contain
+    - Entire image remains visible
+    - No cropping
+  */
+
+  .problem-art-card{
+    height:655px;
+    padding:0;
+    overflow:hidden;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center
+  }
+
+  .problem-art-card img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center
+  }
+
+  .bullets{
+    list-style:none;
+    margin-top:80px;
+    padding-left:6px
+  }
+
+  .bullets li{
+    position:relative;
+    padding-left:34px;
+    margin-bottom:44px;
+    font-size:22px;
+    line-height:1.45;
+    color:#20262f;
+    font-weight:600
+  }
+
+  .bullets li::before{
+    content:'';
+    position:absolute;
+    left:4px;
+    top:10px;
+    width:9px;
+    height:9px;
+    background:#4a5464;
+    border-radius:50%
+  }
+
+  .bullets li.vp::before{
+    background:transparent;
+    border:3px solid #4a5464;
+    border-radius:2px;
+    width:7px;
+    height:7px
+  }
+
+  /* =========================
+     SLIDE 3
+  ========================= */
+
+  .sol-grid{
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:36px;
+    height:100%;
+    align-items:start
+  }
+
+  .sol-card h3{
+    font-size:25px;
+    font-weight:800;
+    color:var(--text-dark);
+    margin-bottom:16px;
+    letter-spacing:.5px
+  }
+
+  .sol-body{
+    position:relative;
+    height:520px
+  }
+
+  .sol-center{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-52%);
+    width:200px;
+    height:250px;
+    border:4px solid var(--tcs-blue);
+    border-radius:22px;
+    background:linear-gradient(
+      180deg,
+      #fff,
+      #eaf2fc
+    );
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-top:12px;
+    box-shadow:0 10px 26px rgba(0,87,184,.15)
+  }
+
+  .sol-chat{
+    margin:8px auto 0;
+    width:72%;
+    height:110px;
+    border:2px solid #7fb3e3;
+    border-radius:10px;
+    padding:8px;
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+    background:#fff
+  }
+
+  .sol-chat i{
+    display:block;
+    height:9px;
+    border-radius:5px;
+    background:#c8d8ea
+  }
+
+  .sol-chat i.short{
+    width:60%
+  }
+
+  .sol-chat .btn{
+    margin-top:auto;
+    height:16px;
+    border-radius:8px;
+    background:linear-gradient(
+      180deg,
+      #7db9ec,
+      #5da0dd
+    )
+  }
+
+  .sol-chat .check{
+    position:absolute;
+    font-size:16px;
+    font-weight:800;
+    color:var(--tcs-blue)
+  }
+
+  .orbit-item{
+    position:absolute;
+    width:168px;
+    text-align:center
+  }
+
+  .orbit-item .chip{
+    width:92px;
+    height:92px;
+    margin:0 auto;
+    border-radius:50%;
+    border:3px solid #8fceac;
+    background:#eafaf1;
+    display:flex;
+    align-items:center;
+    justify-content:center
+  }
+
+  .orbit-item p{
+    margin-top:8px;
+    font-size:13.5px;
+    font-weight:700;
+    color:#39414f;
+    line-height:1.3
+  }
+
+  .oi1{
+    top:-6px;
+    left:6%
+  }
+
+  .oi2{
+    top:-6px;
+    right:4%
+  }
+
+  .oi3{
+    bottom:96px;
+    left:6%
+  }
+
+  .oi4{
+    bottom:96px;
+    right:4%
+  }
+
+  .sol-outcome{
+    position:absolute;
+    bottom:-8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:320px;
+    text-align:center;
+    background:#f6fcff;
+    border:1.4px dashed #9db9d8;
+    border-radius:14px;
+    padding:12px
+  }
+
+  .sol-outcome p{
+    font-size:14px;
+    font-weight:700;
+    color:#39414f;
+    line-height:1.4
+  }
+
+  .sol-outcome .stars{
+    color:#3d6db8;
+    font-size:19px;
+    letter-spacing:6px;
+    margin-top:4px
+  }
+
+  .sol-arrow{
+    position:absolute;
+    bottom:64px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:30px;
+    color:var(--green);
+    font-weight:800
+  }
+
+  .lead{
+    font-size:24px;
+    line-height:1.5;
+    color:#20262f;
+    margin:26px 0 18px;
+    font-weight:500
+  }
+
+  /* =========================
+     SLIDE 4
+  ========================= */
+
+  .full-image-slide{
+    background:#000
+  }
+
+  .full-image-slide img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center
+  }
+
+  /* =========================
+     SLIDE 5 / 6
+  ========================= */
+
+  /* =========================
+     PRINT
+  ========================= */
+
+  @media print{
+    html,body{
+      overflow:visible;
+      background:#fff
+    }
+
+    .nav,
+    .counter{
+      display:none
+    }
+
+    .slide{
+      display:block;
+      position:relative;
+      width:100vw;
+      height:56.25vw
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="stage" id="stage">
+
+  <!-- =====================================
+       SLIDE 1 — TITLE
+  ====================================== -->
+
+  <section class="slide dark active" data-slide="1">
+
+    <div class="s1">
+
+      <div class="row">
+        <span class="lbl">Team Name:</span>
+        <span class="val">ClaimCompanion</span>
+      </div>
+
+      <div class="row">
+        <span class="lbl">Idea Name:</span>
+        <span class="val">
+          Insurance Claim Query Chatbot with<br>
+          Document Verification
+        </span>
+      </div>
+
+      <div class="members-lbl">
+        Team Members
+      </div>
+
+      <ul>
+        <li>Kanha Bindal</li>
+        <li>Sumeet Verma</li>
+        <li>D R Revanth</li>
+        <li>Swedha Kalaiarasan</li>
+      </ul>
+
+    </div>
+
+    <div class="page-tag">
+      1 |
+    </div>
+
+    <div class="next-tab">
+      Problem Statement
+    </div>
+
+  </section>
+
+  <!-- =====================================
+       SLIDE 2 — PROBLEM STATEMENT
+       TCS BRAND TAG REMOVED
+       IMAGE NOW FITS FULLY
+  ====================================== -->
+
+  <section class="slide" data-slide="2">
+
+    <div class="ribbon">
+      Problem Statement
+    </div>
+
+    <div class="content">
+
+      <div class="problem-grid">
+
+        <!-- Full image without cropping -->
+        <div class="white-card problem-art-card">
+
+          <img
+            src="insurance-claims-challenges.png"
+            alt="Insurance claims challenges infographic"
+          >
+
+        </div>
+
+        <ul class="bullets">
+
+          <li>
+            Customers struggle to get timely claim status updates
+          </li>
+
+          <li>
+            Manual document verification delays
+          </li>
+
+          <li>
+            Support teams handle a high volume of repetitive queries.
+          </li>
+
+          <li>
+            Poor customer claims experience,
+          </li>
+
+          <li>
+            Processing delays
+          </li>
+
+          <li>
+            Higher Operational cost
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+    <div class="next-tab">
+      Idea / Solution Brief
+    </div>
+
+    <div
+      class="page-tag"
+      style="color:#9aa5b5"
+    >
+      2 |
+    </div>
+
+  </section>
+
+  <!-- =====================================
+       SLIDE 3 — IDEA / SOLUTION BRIEF
+       TCS BRAND TAG REMOVED
+  ====================================== -->
+
+  <section class="slide" data-slide="3">
+
+    <div class="ribbon">
+      Idea / Solution Brief
+    </div>
+
+    <div class="content">
+
+      <div class="sol-grid">
+
+        <!-- LEFT SOLUTION DIAGRAM -->
+
+        <div class="white-card">
+
+          <h3>
+            ClaimCompanion SOLUTION
+          </h3>
+
+          <div class="sol-body">
+
+            <!-- TOP LEFT -->
+            <div class="orbit-item oi1">
+
+              <div class="chip">
+
+                <svg
+                  width="44"
+                  height="44"
+                  viewBox="0 0 44 44"
+                  fill="var(--green)"
+                >
+
+                  <path
+                    d="M6 10a4 4 0 0 1 4-4h24a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H18l-8 7v-7a4 4 0 0 1-4-4Z"
+                  />
+
+                  <circle
+                    cx="15"
+                    cy="18"
+                    r="2.4"
+                    fill="#fff"
+                  />
+
+                  <circle
+                    cx="22"
+                    cy="18"
+                    r="2.4"
+                    fill="#fff"
+                  />
+
+                  <circle
+                    cx="29"
+                    cy="18"
+                    r="2.4"
+                    fill="#fff"
+                  />
+
+                </svg>
+
+              </div>
+
+              <p>
+                Instant answers to claim queries
+              </p>
+
+            </div>
+
+            <!-- TOP RIGHT -->
+            <div class="orbit-item oi2">
+
+              <div class="chip">
+
+                <svg
+                  width="42"
+                  height="42"
+                  viewBox="0 0 42 42"
+                  fill="none"
+                  stroke="var(--green)"
+                  stroke-width="3"
+                >
+
+                  <path d="M9 4h15l8 8v26H9Z"/>
+
+                  <path
+                    d="M24 4v8h8"
+                  />
+
+                  <path
+                    d="M14 26l5 5 9-10"
+                    stroke-width="3.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+
+                </svg>
+
+              </div>
+
+              <p>
+                Automatic document verification
+              </p>
+
+            </div>
+
+            <!-- BOTTOM LEFT -->
+            <div class="orbit-item oi3">
+
+              <div class="chip">
+
+                <svg
+                  width="44"
+                  height="44"
+                  viewBox="0 0 44 44"
+                  fill="none"
+                  stroke="var(--green)"
+                  stroke-width="3.2"
+                >
+
+                  <circle
+                    cx="22"
+                    cy="22"
+                    r="15"
+                  />
+
+                  <path
+                    d="M22 14v8l6 4"
+                    stroke-linecap="round"
+                  />
+
+                </svg>
+
+              </div>
+
+              <p>
+                Real-time claim status updates
+              </p>
+
+            </div>
+
+            <!-- BOTTOM RIGHT -->
+            <div class="orbit-item oi4">
+
+              <div class="chip">
+
+                <svg
+                  width="46"
+                  height="46"
+                  viewBox="0 0 46 46"
+                  fill="var(--green)"
+                >
+
+                  <circle
+                    cx="16"
+                    cy="17"
+                    r="6"
+                  />
+
+                  <circle
+                    cx="30"
+                    cy="17"
+                    r="6"
+                  />
+
+                  <path
+                    d="M5 36c0-7 5-11 11-11s11 4 11 11M19 36c0-7 5-11 11-11s11 4 11 11Z"
+                  />
+
+                </svg>
+
+              </div>
+
+              <p>
+                Reduced workload for support teams
+              </p>
+
+            </div>
+
+            <!-- CENTER AI -->
+            <div class="sol-center">
+
+              <svg
+                width="110"
+                height="104"
+                viewBox="0 0 110 104"
+              >
+
+                <line
+                  x1="55"
+                  y1="6"
+                  x2="55"
+                  y2="18"
+                  stroke="var(--tcs-blue)"
+                  stroke-width="4"
+                />
+
+                <circle
+                  cx="55"
+                  cy="6"
+                  r="5"
+                  fill="var(--tcs-blue)"
+                />
+
+                <rect
+                  x="20"
+                  y="18"
+                  width="70"
+                  height="70"
+                  rx="18"
+                  fill="#c9dff2"
+                  stroke="var(--tcs-blue)"
+                  stroke-width="4"
+                />
+
+                <rect
+                  x="10"
+                  y="40"
+                  width="10"
+                  height="20"
+                  rx="5"
+                  fill="#9cc0e2"
+                  stroke="var(--tcs-blue)"
+                  stroke-width="3"
+                />
+
+                <rect
+                  x="90"
+                  y="40"
+                  width="10"
+                  height="20"
+                  rx="5"
+                  fill="#9cc0e2"
+                  stroke="var(--tcs-blue)"
+                  stroke-width="3"
+                />
+
+                <circle
+                  cx="40"
+                  cy="48"
+                  r="7"
+                  fill="var(--tcs-blue)"
+                />
+
+                <circle
+                  cx="70"
+                  cy="48"
+                  r="7"
+                  fill="var(--tcs-blue)"
+                />
+
+                <rect
+                  x="42"
+                  y="66"
+                  width="26"
+                  height="7"
+                  rx="3.5"
+                  fill="var(--tcs-blue)"
+                />
+
+              </svg>
+
+              <div class="sol-chat">
+
+                <i></i>
+
+                <i class="short"></i>
+
+                <span
+                  class="check"
+                  style="left:10px;bottom:22px"
+                >
+                  ✔
+                </span>
+
+                <span
+                  class="check"
+                  style="left:34px;bottom:30px"
+                >
+                  ✔
+                </span>
+
+                <div class="btn"></div>
+
+              </div>
+
+            </div>
+
+            <!-- ARROW -->
+            <div class="sol-arrow">
+              ↓
+            </div>
+
+            <!-- OUTCOME -->
+            <div class="sol-outcome">
+
+              <p>
+                Faster resolution<br>
+                Higher efficiency<br>
+                Happier customers
+              </p>
+
+              <div class="stars">
+                ★ ★ ★ ★ ★
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- RIGHT CONTENT -->
+
+        <div>
+
+          <p class="lead">
+            We are proposing an AI-powered insurance claims assistant –
+            named <b>ClaimCompanion</b>
+          </p>
+
+          <ul
+            class="bullets"
+            style="margin-top:6px"
+          >
+
+            <li class="vp">
+              Instant answers to claim-related questions
+            </li>
+
+            <li class="vp">
+              Real-time claim status tracking
+            </li>
+
+            <li class="vp">
+              Automated document verification
+            </li>
+
+            <li class="vp">
+              Alerts for missing or incomplete documents
+            </li>
+
+            <li class="vp">
+              Reduced workload for support teams
+            </li>
+
+            <li class="vp">
+              Faster, transparent, and seamless claims experience
+              for customers
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div
+      class="next-tab"
+      style="
+        display:flex;
+        gap:16px;
+        align-items:center;
+        left:56px
+      "
+    >
+
+      <span>Demo</span>
+      <span>Thank You</span>
+
+    </div>
+
+    <div
+      class="page-tag"
+      style="color:#9aa5b5"
+    >
+      3 |
+    </div>
+
+  </section>
+
+  <!-- =====================================
+       SLIDE 4 — ARCHITECTURE
+  ====================================== -->
+
+  <section
+    class="slide full-image-slide"
+    data-slide="4"
+  >
+
+    <img
+      src="arch.jpg"
+      alt="ClaimCompanion solution architecture"
+    >
+
+  </section>
+
+  <!-- =====================================
+       SLIDE 5 — DEMO
+  ====================================== -->
+
+  <section class="slide dark" data-slide="5">
+
+    <div
+      style="
+        position:absolute;
+        top:26px;
+        left:42px
+      "
+    >
+
+      <div class="brandline">
+
+        <b style="color:#fff">
+          tcs
+        </b>
+
+        <span style="color:#8fa3c4">
+          SERVICES
+        </span>
+
+      </div>
+
+    </div>
+
+    <div
+      style="
+        position:absolute;
+        top:26px;
+        right:42px
+      "
+    >
+
+      <div class="brandline">
+
+        <b
+          style="
+            color:#fff;
+            font-size:26px;
+            letter-spacing:4px
+          "
+        >
+          TATA
+        </b>
+
+      </div>
+
+    </div>
+
+    <div
+      style="
+        position:absolute;
+        left:13%;
+        top:44%;
+        font-size:96px;
+        font-weight:700;
+        color:var(--cyan);
+        letter-spacing:1px
+      "
+    >
+      Demo
+    </div>
+
+    <div
+      style="
+        position:absolute;
+        right:9%;
+        top:36%;
+        display:flex;
+        flex-direction:column;
+        gap:10px
+      "
+    >
+
+      <div class="brain-wrap">
+
+        <svg viewBox="0 0 200 200">
+
+          <defs>
+
+            <linearGradient
+              id="gL"
+              x1="0"
+              y1="0"
+              x2="1"
+              y2="1"
+            >
+
+              <stop
+                offset="0"
+                stop-color="#f9c23a"
+              />
+
+              <stop
+                offset="1"
+                stop-color="#e08e00"
+              />
+
+            </linearGradient>
+
+            <linearGradient
+              id="gR"
+              x1="1"
+              y1="0"
+              x2="0"
+              y2="1"
+            >
+
+              <stop
+                offset="0"
+                stop-color="#2f7be0"
+              />
+
+              <stop
+                offset="1"
+                stop-color="#0e2a5c"
+              />
+
+            </linearGradient>
+
+          </defs>
+
+          <path
+            fill="url(#gL)"
+            d="M100 26C66 6 22 26 20 66c-14 8-16 32-4 44-8 18 6 42 28 40 6 16 30 22 42 8Z"
+          />
+
+          <path
+            fill="url(#gR)"
+            d="M100 26c34-20 78 0 80 40 14 8 16 32 4 44 8 18-6 42-28 40-6 16-30 22-42 8Z"
+          />
+
+          <g
+            stroke="#e8d193"
+            stroke-width="2.4"
+            fill="none"
+            opacity=".9"
+          >
+
+            <path d="M60 40v24h20"/>
+            <path d="M36 66h22v22"/>
+            <path d="M32 108h20v28h24"/>
+            <path d="M64 150v-20"/>
+            <path d="M84 30v-14"/>
+            <path d="M52 60l-12-12"/>
+
+            <circle cx="60" cy="40" r="4" fill="#f6e6b8"/>
+            <circle cx="80" cy="64" r="4" fill="#f6e6b8"/>
+            <circle cx="36" cy="66" r="4" fill="#f6e6b8"/>
+            <circle cx="58" cy="88" r="4" fill="#f6e6b8"/>
+            <circle cx="32" cy="108" r="4" fill="#f6e6b8"/>
+            <circle cx="52" cy="136" r="4" fill="#f6e6b8"/>
+            <circle cx="76" cy="136" r="4" fill="#f6e6b8"/>
+            <circle cx="64" cy="150" r="4" fill="#f6e6b8"/>
+
+          </g>
+
+          <g
+            stroke="#bcd7ff"
+            stroke-width="2.4"
+            fill="none"
+            opacity=".95"
+          >
+
+            <path d="M140 40v24h-20"/>
+            <path d="M164 66h-22v22"/>
+            <path d="M168 108h-20v28h-24"/>
+            <path d="M136 150v-20"/>
+            <path d="M116 30v-14"/>
+            <path d="M148 60l12-12"/>
+            <path d="M170 90l18 6"/>
+            <path d="M170 112l18-2"/>
+            <path d="M158 44l12-14"/>
+            <path d="M126 24l6-16"/>
+
+            <circle cx="140" cy="40" r="4" fill="#dbeaff"/>
+            <circle cx="120" cy="64" r="4" fill="#dbeaff"/>
+            <circle cx="164" cy="66" r="4" fill="#dbeaff"/>
+            <circle cx="142" cy="88" r="4" fill="#dbeaff"/>
+            <circle cx="168" cy="108" r="4" fill="#dbeaff"/>
+            <circle cx="148" cy="136" r="4" fill="#dbeaff"/>
+            <circle cx="124" cy="136" r="4" fill="#dbeaff"/>
+            <circle cx="136" cy="150" r="4" fill="#dbeaff"/>
+            <circle cx="188" cy="96" r="3.4" fill="#dbeaff"/>
+            <circle cx="188" cy="110" r="3.4" fill="#dbeaff"/>
+            <circle cx="170" cy="30" r="3.4" fill="#dbeaff"/>
+            <circle cx="132" cy="8" r="3.4" fill="#dbeaff"/>
+
+          </g>
+
+        </svg>
+
+        <div class="deposit">
+
+          <div class="brain-chip">
+            AI
+          </div>
+
+        </div>
+
+      </div>
+
+      <div
+        class="event-word"
+        style="font-size:50px"
+      >
+        Innov<span class="AI">AI</span>te
+        <span style="color:var(--orange)">
+          '26
+        </span>
+      </div>
+
+      <div class="event-sub">
+
+        <span class="rule">
+          ──
+        </span>
+
+        <span class="w1">
+          hack.
+        </span>
+
+        <span class="w2">
+          build.
+        </span>
+
+        <span class="w3">
+          transform.
+        </span>
+
+        <span class="rule g">
+          ──
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="page-tag">
+      5 |
+    </div>
+
+  </section>
+
+  <!-- =====================================
+       SLIDE 6 — THANK YOU
+  ====================================== -->
+
+  <section class="slide dark" data-slide="6">
+
+    <div
+      style="
+        position:absolute;
+        left:20%;
+        top:44%;
+        font-size:88px;
+        font-weight:700;
+        color:var(--cyan);
+        letter-spacing:1px
+      "
+    >
+      Thank You
+    </div>
+
+    <div
+      style="
+        position:absolute;
+        right:10%;
+        top:32%;
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+        align-items:flex-start
+      "
+    >
+
+      <div class="brain-wrap">
+
+        <svg viewBox="0 0 200 200">
+
+          <path
+            fill="url(#gL)"
+            d="M100 26C66 6 22 26 20 66c-14 8-16 32-4 44-8 18 6 42 28 40 6 16 30 22 42 8Z"
+          />
+
+          <path
+            fill="url(#gR)"
+            d="M100 26c34-20 78 0 80 40 14 8 16 32 4 44 8 18-6 42-28 40-6 16-30 22-42 8Z"
+          />
+
+          <g
+            stroke="#e8d193"
+            stroke-width="2.4"
+            fill="none"
+            opacity=".9"
+          >
+
+            <path d="M60 40v24h20"/>
+            <path d="M36 66h22v22"/>
+            <path d="M32 108h20v28h24"/>
+            <path d="M64 150v-20"/>
+            <path d="M84 30v-14"/>
+
+            <circle cx="60" cy="40" r="4" fill="#f6e6b8"/>
+            <circle cx="80" cy="64" r="4" fill="#f6e6b8"/>
+            <circle cx="36" cy="66" r="4" fill="#f6e6b8"/>
+            <circle cx="58" cy="88" r="4" fill="#f6e6b8"/>
+            <circle cx="32" cy="108" r="4" fill="#f6e6b8"/>
+            <circle cx="52" cy="136" r="4" fill="#f6e6b8"/>
+            <circle cx="76" cy="136" r="4" fill="#f6e6b8"/>
+            <circle cx="64" cy="150" r="4" fill="#f6e6b8"/>
+
+          </g>
+
+          <g
+            stroke="#bcd7ff"
+            stroke-width="2.4"
+            fill="none"
+            opacity=".95"
+          >
+
+            <path d="M140 40v24h-20"/>
+            <path d="M164 66h-22v22"/>
+            <path d="M168 108h-20v28h-24"/>
+            <path d="M136 150v-20"/>
+            <path d="M116 30v-14"/>
+
+            <circle cx="140" cy="40" r="4" fill="#dbeaff"/>
+            <circle cx="120" cy="64" r="4" fill="#dbeaff"/>
+            <circle cx="164" cy="66" r="4" fill="#dbeaff"/>
+            <circle cx="142" cy="88" r="4" fill="#dbeaff"/>
+            <circle cx="168" cy="108" r="4" fill="#dbeaff"/>
+            <circle cx="148" cy="136" r="4" fill="#dbeaff"/>
+            <circle cx="124" cy="136" r="4" fill="#dbeaff"/>
+            <circle cx="136" cy="150" r="4" fill="#dbeaff"/>
+
+          </g>
+
+        </svg>
+
+        <div class="deposit">
+
+          <div class="brain-chip">
+            AI
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="event-word">
+
+        Innov<span class="AI">AI</span>te
+        <span style="color:var(--orange)">
+          '26
+        </span>
+
+      </div>
+
+      <div class="event-sub">
+
+        <span class="rule">
+          ──
+        </span>
+
+        <span class="w1">
+          hack.
+        </span>
+
+        <span class="w2">
+          build.
+        </span>
+
+        <span class="w3">
+          transform.
+        </span>
+
+        <span class="rule g">
+          ──
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="page-tag">
+      6 |
+    </div>
+
+  </section>
+
+</div>
+
+<!-- =====================================
+     NAVIGATION
+====================================== -->
+
+<div
+  class="counter"
+  id="counter"
+>
+  1 / 6
+</div>
+
+<div class="nav">
+
+  <button
+    id="prev"
+    aria-label="Previous"
+  >
+    ‹
+  </button>
+
+  <button
+    id="next"
+    aria-label="Next"
+  >
+    ›
+  </button>
+
+</div>
+
+<script>
+
+  const slides = [
+    ...document.querySelectorAll('.slide')
+  ];
+
+  let idx = 0;
+
+  function show(n){
+
+    idx = Math.min(
+      Math.max(n,0),
+      slides.length - 1
+    );
+
+    slides.forEach(
+      (s,i) =>
+        s.classList.toggle(
+          'active',
+          i === idx
+        )
+    );
+
+    document.getElementById(
+      'counter'
+    ).textContent =
+      (idx + 1) + ' / ' + slides.length;
+
+  }
+
+  document.getElementById(
+    'next'
+  ).onclick = () =>
+    show(idx + 1);
+
+  document.getElementById(
+    'prev'
+  ).onclick = () =>
+    show(idx - 1);
+
+  document.addEventListener(
+    'keydown',
+    e => {
+
+      if([
+        'ArrowRight',
+        'ArrowDown',
+        'PageDown',
+        ' '
+      ].includes(e.key)){
+        show(idx + 1);
+      }
+
+      if([
+        'ArrowLeft',
+        'ArrowUp',
+        'PageUp'
+      ].includes(e.key)){
+        show(idx - 1);
+      }
+
+    }
+  );
+
+  const stage =
+    document.getElementById('stage');
+
+  function fit(){
+
+    const W = 1600;
+    const H = 900;
+
+    const s = Math.min(
+      innerWidth / W,
+      innerHeight / H
+    );
+
+    stage.style.width =
+      W + 'px';
+
+    stage.style.height =
+      H + 'px';
+
+    stage.style.transform =
+      `translate(-50%,-50%) scale(${s})`;
+
+  }
+
+  addEventListener(
+    'resize',
+    fit
+  );
+
+  fit();
+
+</script>
+
+</body>
+</html>
+```
